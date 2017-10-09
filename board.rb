@@ -1,4 +1,6 @@
 class Board 
+	attr_reader :status
+
 	@@positions = {
 		1 => [2,0],
 		2 => [2,1],
@@ -11,7 +13,6 @@ class Board
 		9 => [0,2]
 	}
 
-
 	def initialize
 		@board = [Array.new(3), Array.new(3), Array.new(3)]
 		@i=10
@@ -19,20 +20,63 @@ class Board
 			x.map! { |c| c = @i; @i -= 1 }
 			x.reverse!
 		end
+		@plays = 0
+		@status = "continue"
 	end
 
 	def show
-		puts "\n\t  #{@board[0].join("  |  ")}"
-		puts "\t_  _  _  _  _  _\n\n"
-		puts "\t  #{@board[1].join("  |  ")}\n"
-		puts "\t_  _  _  _  _  _\n\n"
-		puts "\t  #{@board[2].join("  |  ")}\n\n"
+		# puts "\n\t  #{@board[0].join("  |  ")}"
+		# puts "\t_  _  _  _  _  _\n\n"
+		# puts "\t  #{@board[1].join("  |  ")}\n"
+		# puts "\t_  _  _  _  _  _\n\n"
+		# puts "\t  #{@board[2].join("  |  ")}\n\n"
+	
+		puts "\n  #{@board[0].join("  |  ")}"
+		puts "_  _  _  _  _  _\n\n"
+		puts "  #{@board[1].join("  |  ")}\n"
+		puts "_  _  _  _  _  _\n\n"
+		puts "  #{@board[2].join("  |  ")}\n\n"
 	end	
 
-	def play(position)
-		@position = position
-		@board[@@positions[@position][0]][@@positions[@position][1]] = "X"
+	def play(position, player)
+		@position = position.to_i
+		# puts @position.is_a? Integer
+		@sub_array = @@positions[@position]
+		# puts @sub_array
+		
+		@board[@sub_array[0]][@sub_array[1]] = player
+		# puts @board[0][0]
+		@plays += 1
+	end
+
+	def over?
+		@status_array = Array.new
+		@board.each do |row|
+			 row.each { |cell|  @status_array.push(cell) if cell.is_a? Integer}
+		end
+
+		if @status_array.length == 0
+			@status = "stop"
+			return "draw"
+		end
+	end
+
+	def status
+		@status
 	end
 
 end 
 
+
+# a = Board.new
+# a.play(1,"X")
+# a.play(2,"X")
+# a.play(3,"X")
+# a.play(4,"X")
+# a.play(5,"X")
+# a.play(6,"X")
+# a.play(7,"X")
+# a.play(8,"X")
+# a.play(9,"X")
+# a.over?
+# puts "status #{a.status}"
