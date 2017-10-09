@@ -66,17 +66,3 @@ class Board
 	end
 
 end 
-
-
-# a = Board.new
-# a.play(1,"X")
-# a.play(2,"X")
-# a.play(3,"X")
-# a.play(4,"X")
-# a.play(5,"X")
-# a.play(6,"X")
-# a.play(7,"X")
-# a.play(8,"X")
-# a.play(9,"X")
-# a.over?
-# puts "status #{a.status}"
